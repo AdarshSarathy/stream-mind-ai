@@ -14,9 +14,15 @@ async function* mockLLMGenerator(prompt) {
 }
 
 const app = express();
+const path = require('path');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Mandatory for Twilio Webhooks
+app.use(express.static(path.join(__dirname, 'public'))); // Serve the real-time UI natively
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
@@ -30,9 +36,6 @@ wss.on('connection', (ws) => {
         console.log(`Received prompt stream: ${prompt}`);
 
         try {
-            // An enterprise GenAI SDK implementation easily hooks here:
-            // const result = await chat.generateContentStream(prompt);
-            // for await (const chunk of result) { ws.send(chunk.text); }
 
             // Using robust mock generator to perfectly guarantee functionality demonstration without private API keys
             for await (const chunk of mockLLMGenerator(prompt)) {

@@ -6,7 +6,9 @@ let ws;
 let currentAiMessageDiv = null;
 
 function connectWebSocket() {
-    ws = new WebSocket('ws://localhost:3001');
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}`;
+    ws = new WebSocket(wsUrl);
 
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data);

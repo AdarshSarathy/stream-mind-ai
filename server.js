@@ -17,7 +17,7 @@ const app = express();
 const path = require('path');
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Mandatory for Twilio Webhooks
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'))); // Serve the real-time UI natively
 
 app.get('/', (req, res) => {
@@ -59,12 +59,10 @@ wss.on('connection', (ws) => {
     });
 });
 
-// Robust Twilio Webhook Endpoint validating Telephony logic
 app.post('/webhook/twilio', (req, res) => {
     const incomingMessage = req.body.Body || 'No message natively provided';
     console.log(`Twilio received authentic SMS: ${incomingMessage}`);
 
-    // Generate valid TwiML XML Response framework
     const twiml = `
         <Response>
             <Message>Hello from StreamMind API! We successfully received your message: "${incomingMessage}". Your query is natively processing in our system.</Message>

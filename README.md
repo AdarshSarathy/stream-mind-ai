@@ -38,6 +38,3 @@ To efficiently launch this service natively on your machine:
 
 ## 📖 Usage
 Securely navigate to `http://localhost:3001` natively inside any modernized browser viewport to utilize the comprehensive real-time streaming capability. Background telephony processing correctly defaults exclusively to the server's `POST /webhook/twilio` endpoints.
-
----
-*Developed cleanly emphasizing modern streaming & webhook API architectures.*
